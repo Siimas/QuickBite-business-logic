@@ -3,7 +3,7 @@ name: Code Quality Analysis
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   analyze:

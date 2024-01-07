@@ -1,11 +1,15 @@
 package com.quickbite.businesslogic.Entities.Restaurant;
 
-import com.quickbite.businesslogic.GeoLocation;
+import com.quickbite.businesslogic.Entities.Deliveryman.Deliveryman;
+import com.quickbite.businesslogic.Entities.Food.Food;
+import com.quickbite.businesslogic.Entities.Rating.Rating;
+import com.quickbite.businesslogic.Entities.Staff.Staff;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +23,14 @@ public class Restaurant {
     private String name;
     @Embedded
     private GeoLocation location;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Rating> ratings;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Food> foodList;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Deliveryman> deliverymanList;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Staff> staffList;
 
     public static class builder {
         private final Restaurant restaurant;

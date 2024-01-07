@@ -3,6 +3,7 @@ package com.quickbite.businesslogic.Service;
 import com.quickbite.businesslogic.Dto.RestaurantDto;
 import com.quickbite.businesslogic.Entities.Restaurant.Restaurant;
 import com.quickbite.businesslogic.Entities.Restaurant.RestaurantRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.NoSuchElementException;
 
 @Service
+@AllArgsConstructor
 public class RestaurantService {
 
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
 
     public Iterable<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
@@ -44,5 +45,9 @@ public class RestaurantService {
         restaurant.setLocation(restaurantDto.getLocation());
 
         restaurantRepository.save(restaurant);
+    }
+
+    public void deleteRestaurant(Long id) {
+        restaurantRepository.deleteById(id);
     }
 }

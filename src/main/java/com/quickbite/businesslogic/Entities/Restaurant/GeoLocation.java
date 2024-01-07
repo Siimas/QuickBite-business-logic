@@ -1,4 +1,4 @@
-package com.quickbite.businesslogic;
+package com.quickbite.businesslogic.Entities.Restaurant;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

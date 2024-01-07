@@ -2,20 +2,18 @@ package com.quickbite.businesslogic.Controllers;
 
 import com.quickbite.businesslogic.Dto.RestaurantDto;
 import com.quickbite.businesslogic.Entities.Restaurant.Restaurant;
-import com.quickbite.businesslogic.Entities.Restaurant.RestaurantRepository;
 import com.quickbite.businesslogic.Service.RestaurantService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
-
 @RestController
+@AllArgsConstructor
 @RequestMapping("/restaurant")
 public class RestaurantController {
 
-    @Autowired
-    private RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
     @GetMapping
     public ResponseEntity<Iterable<Restaurant>> getAllRestaurants() {
@@ -25,14 +23,7 @@ public class RestaurantController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Restaurant> getRestaurant(@PathVariable Long id) {
-        Restaurant restaurant;
-
-        try {
-            restaurant = restaurantService.getRestaurant(id);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-
+        Restaurant restaurant = restaurantService.getRestaurant(id);
         return ResponseEntity.ok( restaurant );
     }
 
@@ -43,13 +34,14 @@ public class RestaurantController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantDto restaurantDto) {
-        try {
-            restaurantService.updateRestaurant(id, restaurantDto);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<String> updateRestaurant(@PathVariable Long id, @RequestBody @Validated RestaurantDto restaurantDto) {
+        restaurantService.updateRestaurant(id, restaurantDto);
+        return ResponseEntity.ok("Success!");
+    }
 
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> updateRestaurant(@PathVariable Long id) {
+        restaurantService.deleteRestaurant(id);
         return ResponseEntity.ok("Success!");
     }
 }

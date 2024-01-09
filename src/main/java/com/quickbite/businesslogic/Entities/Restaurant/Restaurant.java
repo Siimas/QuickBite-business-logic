@@ -4,16 +4,17 @@ import com.quickbite.businesslogic.Entities.Deliveryman.Deliveryman;
 import com.quickbite.businesslogic.Entities.Food.Food;
 import com.quickbite.businesslogic.Entities.Rating.Rating;
 import com.quickbite.businesslogic.Entities.Staff.Staff;
+import com.quickbite.businesslogic.Entities.User.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Restaurant {
 
@@ -31,27 +32,8 @@ public class Restaurant {
     private List<Deliveryman> deliverymanList;
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Staff> staffList;
-
-    public static class builder {
-        private final Restaurant restaurant;
-
-        public builder(){
-            this.restaurant = new Restaurant();
-        }
-
-        public builder name(String name) {
-            this.restaurant.setName(name);
-            return this;
-        }
-
-        public builder location(GeoLocation location) {
-            this.restaurant.setLocation(location);
-            return this;
-        }
-
-        public Restaurant build() {
-            return this.restaurant;
-        }
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User owner;
 
 }

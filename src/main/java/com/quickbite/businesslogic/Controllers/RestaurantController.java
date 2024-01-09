@@ -1,12 +1,13 @@
 package com.quickbite.businesslogic.Controllers;
 
-import com.quickbite.businesslogic.Dto.RestaurantDto;
-import com.quickbite.businesslogic.Entities.Restaurant.Restaurant;
+import com.quickbite.businesslogic.Dto.Restaurant.RestaurantCreateDTO;
+import com.quickbite.businesslogic.Dto.Restaurant.RestaurantDTO;
 import com.quickbite.businesslogic.Service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -15,27 +16,27 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
+    // TODO: ADD DTO FIELD VALIDATION
+
     @GetMapping
-    public ResponseEntity<Iterable<Restaurant>> getAllRestaurants() {
-        Iterable<Restaurant> restaurants = restaurantService.getAllRestaurants();
-        return ResponseEntity.ok( restaurants );
+    public ResponseEntity<List<RestaurantDTO>> getAllRestaurants() {
+        return ResponseEntity.ok( restaurantService.getAllRestaurants() );
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Restaurant> getRestaurant(@PathVariable Long id) {
-        Restaurant restaurant = restaurantService.getRestaurant(id);
-        return ResponseEntity.ok( restaurant );
+    public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable Long id) {
+        return ResponseEntity.ok( restaurantService.getRestaurant(id) );
     }
 
     @PostMapping
-    public ResponseEntity<String> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        restaurantService.createRestaurant(restaurantDto);
+    public ResponseEntity<String> createRestaurant(@RequestBody RestaurantCreateDTO restaurantCreateDTO) {
+        restaurantService.createRestaurant(restaurantCreateDTO);
         return ResponseEntity.ok("Success!");
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<String> updateRestaurant(@PathVariable Long id, @RequestBody @Validated RestaurantDto restaurantDto) {
-        restaurantService.updateRestaurant(id, restaurantDto);
+    public ResponseEntity<String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantCreateDTO restaurantCreateDTO) {
+        restaurantService.updateRestaurant(id, restaurantCreateDTO);
         return ResponseEntity.ok("Success!");
     }
 

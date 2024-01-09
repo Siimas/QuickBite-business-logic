@@ -3,15 +3,15 @@ package com.quickbite.businesslogic.Entities.Delivery;
 import com.quickbite.businesslogic.Entities.Deliveryman.Deliveryman;
 import com.quickbite.businesslogic.Entities.Order.Order;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Delivery {
 
